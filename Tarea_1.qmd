@@ -52,11 +52,12 @@ r1_bis, info_bis1 = optimize.bisect(f, 1.5, 2.5, full_output=True)
 r2_bis, info_bis2 = optimize.bisect(f, 2.5, 3.5, full_output=True)
 print(f"Raíz 1 por bisección: {r1_bis}")
 print(f"Información de la primera raíz: {info_bis1}")
+print("-----------------------------")
 print(f"Raíz 2 por bisección: {r2_bis}")
 print(f"Información de la segunda raíz: {info_bis2}")
 ```
 
-metodo de Newton-Raphson
+Método de Newton-Raphson
 
 ```{python}
 r1_new = optimize.newton(f, 1.8)
