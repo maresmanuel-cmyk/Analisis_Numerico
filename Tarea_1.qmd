@@ -1,6 +1,6 @@
 ---
 title: "Tarea 1. Soluciones de ecuaciones"
-author: "Manuel Mares"
+author: "Manuel Guadalupe Mares Herrera"
 format: 
   html:
     grid:
@@ -60,18 +60,86 @@ print(f"Información de la segunda raíz: {info_bis2}")
 Método de Newton-Raphson
 
 ```{python}
-r1_new = optimize.newton(f, 1.8)
-r2_new = optimize.newton(f, 3.2)
+r1_new, info_new1 = optimize.newton(
+    f, 
+    x0=0.8,          # valor inicial menos trivial
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+r2_new, info_new2 = optimize.newton(
+    f, 
+    x0=4.2,          # valor inicial más alejado
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
 print(f"Raíz 1 por Newton-Raphson: {r1_new}")
+print(f"Información de la primera raíz: {info_new1}")
+print("-----------------------------")
 print(f"Raíz 2 por Newton-Raphson: {r2_new}")
+print(f"Información de la segunda raíz: {info_new2}")
 ```
 
 metodo de la secante
 
 ```{python}
-r1_sec = optimize.newton(f, x0=1.5, x1=2.5)
-r2_sec = optimize.newton(f, x0=2.5, x1=3.5)
-r1_sec, r2_sec
+r1_sec, info_sec1 = optimize.newton(
+    f,
+    x0=1.3,
+    x1=2.6,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+r2_sec, info_sec2 = optimize.newton(
+    f,
+    x0=2.7,
+    x1=3.9,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+print(f"Raíz 1 por secante: {r1_sec}")
+print(f"Información de la primera raíz: {info_sec1}")
+print("-----------------------------")
+print(f"Raíz 2 por secante: {r2_sec}")
+print(f"Información de la segunda raíz: {info_sec2}")
+```
+
+```{python}
+# Función
+f = lambda x: x**2 - 5*x + 6
+
+# Vector para graficar
+x = np.linspace(0, 5, 400)
+
+# Raíces (puedes usar las de bisección si quieres)
+r1 = 2
+r2 = 3
+
+plt.figure()
+plt.plot(x, f(x))
+plt.axhline(0)
+plt.axvline(0)
+
+# Puntos de las raíces
+plt.scatter(r1, 0)
+plt.scatter(r2, 0)
+
+# Etiquetas de las raíces
+plt.annotate("Raíz 1 (2)", (r1, 0), textcoords="offset points", xytext=(-10,10))
+plt.annotate("Raíz 2 (3)", (r2, 0), textcoords="offset points", xytext=(-10,10))
+
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.title("Gráfica de f(x) = x^2 - 5x + 6 con raíces")
+plt.grid()
+plt.show()
 ```
 
 ::: {#exr-tarea1_2}
@@ -81,7 +149,7 @@ f(x) = x^3 - 6x^2 + 11x - 6
 grafica de la función
 ```{python}
 f = lambda x: x**3 - 6*x**2  + 11*x - 6
-x = np.linspace(0, 4, 500)
+x = np.linspace(0, 3.5, 500)
 plt.figure()
 plt.plot(x, f(x), color = "red")
 plt.axhline(0, color = "black") #Eje x
@@ -96,34 +164,142 @@ plt.show()
 #aproximacion de las raíces 
 bisección
 ```{python}
-r1_bis = optimize.bisect(f, 0.5, 1.5)
-r2_bis = optimize.bisect(f, 1.5, 2.5)
-r3_bis = optimize.bisect(f, 2.5, 3.5)
+r1_bis, info_bis1 = optimize.bisect(
+    f, 0.6, 1.4, full_output=True
+)
+
+r2_bis, info_bis2 = optimize.bisect(
+    f, 1.6, 2.4, full_output=True
+)
+
+r3_bis, info_bis3 = optimize.bisect(
+    f, 2.6, 3.4, full_output=True
+)
+
 print(f"Raíz 1 por bisección: {r1_bis}")
+print(f"Información de la primera raíz: {info_bis1}")
+print("-----------------------------")
 print(f"Raíz 2 por bisección: {r2_bis}")
+print(f"Información de la segunda raíz: {info_bis2}")
+print("-----------------------------")
 print(f"Raíz 3 por bisección: {r3_bis}")
+print(f"Información de la tercera raíz: {info_bis3}")
 ```
 
 Newton-Raphson
 
 ```{python}
-r1_new = optimize.newton(f, 0.8)
-r2_new = optimize.newton(f, 1.8)
-r3_new = optimize.newton(f, 2.8)
+df = lambda x: 3*x**2 - 12*x + 11
+
+r1_new, info_new1 = optimize.newton(
+    f,
+    x0=0.3,
+    fprime=df,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+r2_new, info_new2 = optimize.newton(
+    f,
+    x0=1.9,
+    fprime=df,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+r3_new, info_new3 = optimize.newton(
+    f,
+    x0=3.2,
+    fprime=df,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
 print(f"Raíz 1 por Newton-Raphson: {r1_new}")
+print(f"Información de la primera raíz: {info_new1}")
+print("-----------------------------")
 print(f"Raíz 2 por Newton-Raphson: {r2_new}")
+print(f"Información de la segunda raíz: {info_new2}")
+print("-----------------------------")
 print(f"Raíz 3 por Newton-Raphson: {r3_new}")
+print(f"Información de la tercera raíz: {info_new3}")
 ```
 
 Secante
 
 ```{python}
-r1_sec = optimize.newton(f, x0=0.5, x1=1.5)
-r2_sec = optimize.newton(f, x0=1.5, x1=2.5)
-r3_sec = optimize.newton(f, x0=2.5, x1=3.5)
+r1_sec, info_sec1 = optimize.newton(
+    f,
+    x0=0.7,
+    x1=1.3,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+r2_sec, info_sec2 = optimize.newton(
+    f,
+    x0=1.7,
+    x1=2.3,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+r3_sec, info_sec3 = optimize.newton(
+    f,
+    x0=2.7,
+    x1=3.3,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
 print(f"Raíz 1 por secante: {r1_sec}")
+print(f"Información de la primera raíz: {info_sec1}")
+print("-----------------------------")
 print(f"Raíz 2 por secante: {r2_sec}")
+print(f"Información de la segunda raíz: {info_sec2}")
+print("-----------------------------")
 print(f"Raíz 3 por secante: {r3_sec}")
+print(f"Información de la tercera raíz: {info_sec3}")
+```
+
+```{python}
+# Función
+f = lambda x: x**3 - 6*x**2 + 11*x - 6
+
+# Intervalo para graficar
+x = np.linspace(0, 3.5, 500)
+
+# Raíces por bisección (las tuyas)
+r1_bis, _ = optimize.bisect(f, 0.6, 1.4, full_output=True)
+r2_bis, _ = optimize.bisect(f, 1.6, 2.4, full_output=True)
+r3_bis, _ = optimize.bisect(f, 2.6, 3.4, full_output=True)
+
+plt.figure()
+plt.plot(x, f(x), color="red")
+plt.axhline(0, color="black")
+plt.axvline(0, color="black")
+
+# Marcar raíces
+plt.scatter(r1_bis, 0)
+plt.scatter(r2_bis, 0)
+plt.scatter(r3_bis, 0)
+
+# Etiquetas
+plt.annotate(f"{r1_bis:.2f}", (r1_bis, 0), textcoords="offset points", xytext=(-10,10))
+plt.annotate(f"{r2_bis:.2f}", (r2_bis, 0), textcoords="offset points", xytext=(-10,10))
+plt.annotate(f"{r3_bis:.2f}", (r3_bis, 0), textcoords="offset points", xytext=(-10,10))
+
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.title("Gráfica de f(x) = x^3 - 6x^2 + 11x - 6 con raíces")
+plt.grid()
+plt.show()
 ```
 
 ::: {#exr-tarea1_3}
@@ -150,28 +326,115 @@ aproximacion de las raíces
 bisección
 
 ```{python}
-r1_bis = optimize.bisect(f, 0.2, 0.8)
-r2_bis = optimize.bisect(f, 1.0, 1.6)
+r1_bis, info_bis1 = optimize.bisect(
+    f, 0.2, 0.8, full_output=True
+)
+
+r2_bis, info_bis2 = optimize.bisect(
+    f, 1.1, 1.7, full_output=True
+)
+
 print(f"Raíz 1 por bisección: {r1_bis}")
+print(f"Información de la primera raíz: {info_bis1}")
+print("-----------------------------")
 print(f"Raíz 2 por bisección: {r2_bis}")
+print(f"Información de la segunda raíz: {info_bis2}")
 ```
 
 newton-Raphson
 
 ```{python}
-r1_new = optimize.newton(f, 0.4)
-r2_new = optimize.newton(f, 1.3)
+df = lambda x: (
+    3*x**2
+    - 10*x*np.exp(-x)
+    + 5*x**2*np.exp(-x)
+    - 3*np.exp(-3*x)
+)
+
+r1_new, info_new1 = optimize.newton(
+    f,
+    x0=0.5,
+    fprime=df,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+r2_new, info_new2 = optimize.newton(
+    f,
+    x0=1.4,
+    fprime=df,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
 print(f"Raíz 1 por Newton-Raphson: {r1_new}")
+print(f"Información de la primera raíz: {info_new1}")
+print("-----------------------------")
 print(f"Raíz 2 por Newton-Raphson: {r2_new}")
+print(f"Información de la segunda raíz: {info_new2}")
 ```
 
 secante
 
 ```{python}
-r1_sec = optimize.newton(f, x0=0.2, x1=0.8)
-r2_sec = optimize.newton(f, x0=1.0, x1=1.6)
+r1_sec, info_sec1 = optimize.newton(
+    f,
+    x0=0.3,
+    x1=0.9,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
+r2_sec, info_sec2 = optimize.newton(
+    f,
+    x0=1.2,
+    x1=1.8,
+    tol=1e-8,
+    maxiter=50,
+    full_output=True
+)
+
 print(f"Raíz 1 por secante: {r1_sec}")
+print(f"Información de la primera raíz: {info_sec1}")
+print("-----------------------------")
 print(f"Raíz 2 por secante: {r2_sec}")
+print(f"Información de la segunda raíz: {info_sec2}")
+```
+
+```{python}
+# Función
+f = lambda x: x**3 - 5*x**2*np.exp(-x) + np.exp(-3*x)
+
+# Intervalo
+x = np.linspace(0, 2, 400)
+
+# Raíces por bisección (las tuyas)
+r1_bis, _ = optimize.bisect(f, 0.2, 0.8, full_output=True)
+r2_bis, _ = optimize.bisect(f, 1.1, 1.7, full_output=True)
+
+plt.figure()
+plt.plot(x, f(x), color="red")
+plt.axhline(0, color="black")
+plt.axvline(0, color="black")
+
+# Marcar raíces
+plt.scatter(r1_bis, 0)
+plt.scatter(r2_bis, 0)
+
+# Etiquetas
+plt.annotate(f"{r1_bis:.6f}", (r1_bis, 0),
+             textcoords="offset points", xytext=(-15,10))
+plt.annotate(f"{r2_bis:.6f}", (r2_bis, 0),
+             textcoords="offset points", xytext=(-15,10))
+
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.title("Gráfica de f(x) = x^3 - 5x^2 e^{-x} + e^{-3x} con raíces")
+plt.grid()
+plt.show()
 ```
 
 ::: {#exr-tarea1_4}
@@ -183,7 +446,7 @@ grafica de la función
 ```{python}
 def g(x, a):
   return np.exp(-x) - np.cos(a*x)
-x = np.linspace(0, 4, 400)
+x = np.linspace(0, 1.5, 400)
 plt.figure()
 for a in [1, 3, 5, 9]:
   plt.plot(x, g(x, a), label = f"a={a}")
@@ -198,69 +461,274 @@ plt.show()
 ```
 
 aproximacion de las raíces
-bisección
 
 ```{python}
-for a in [1, 3, 5, 9]:
-  print(f"\na={a}")
-  # Bisección
-  r_bis = optimize.bisect(lambda x: g(x, a), 0, 2)
-  # Newton-Raphson
-  r_new = optimize.newton(lambda x: g(x, a), 0.5)
-  # Secante
-  r_sec = optimize.newton(lambda x: g(x, a), x0=0.2, x1=1.0)
-  print(f"Raíz por bisección: {r_bis}")
-  print(f"Raíz por Newton-Raphson: {r_new}")
-  print(f"Raíz por secante: {r_sec}")
+# Función
+def g(x, a):
+    return np.exp(-x) - np.cos(a*x)
+
+# Derivada (para Newton-Raphson)
+def dg(x, a):
+    return -np.exp(-x) + a*np.sin(a*x)
+
+valores_a = [1, 3, 5, 9]
+
+# Intervalo y valores iniciales (según la gráfica)
+a_bis, b_bis = 0.0, 1.2
+x0, x1 = 0.3, 0.9
+
+for a in valores_a:
+    print(f"\n==============================")
+    print(f"RESULTADOS PARA a = {a}")
+    print(f"==============================")
+
+    # ---------------- BISECCIÓN ----------------
+    r_bis, info_bis = optimize.bisect(
+        g,
+        a_bis,
+        b_bis,
+        args=(a,),
+        xtol=1e-8,
+        maxiter=50,
+        full_output=True
+    )
+
+    print("\nMétodo de Bisección")
+    print(f"  Raíz: {r_bis:.8f}")
+    print(f"  Converge: {info_bis.converged}")
+    print(f"  Iteraciones: {info_bis.iterations}")
+
+    # ---------------- SECANTE ----------------
+    r_sec, info_sec = optimize.newton(
+        g,
+        x0=x0,
+        x1=x1,
+        args=(a,),
+        tol=1e-8,
+        maxiter=50,
+        full_output=True
+    )
+
+    print("\nMétodo de la Secante")
+    print(f"  Raíz: {r_sec:.8f}")
+    print(f"  Converge: {info_sec.converged}")
+    print(f"  Iteraciones: {info_sec.iterations}")
+
+    # ---------------- NEWTON-RAPHSON ----------------
+    r_new, info_new = optimize.newton(
+        g,
+        x0=0.5,
+        fprime=dg,
+        args=(a,),
+        tol=1e-8,
+        maxiter=50,
+        full_output=True
+    )
+
+    print("\nMétodo de Newton-Raphson")
+    print(f"  Raíz: {r_new:.8f}")
+    print(f"  Converge: {info_new.converged}")
+    print(f"  Iteraciones: {info_new.iterations}")
 ```
 
+```{python}
+# Función
+def g(x, a):
+    return np.exp(-x) - np.cos(a*x)
+
+valores_a = [1, 3, 5, 9]
+x = np.linspace(0, 1.5, 400)
+
+plt.figure()
+
+for a in valores_a:
+    
+    # Graficar función
+    y = g(x, a)
+    linea, = plt.plot(x, y, label=f"a={a}")
+    
+    # Raíz por bisección
+    r_bis, _ = optimize.bisect(
+        g,
+        0.0,
+        1.2,
+        args=(a,),
+        xtol=1e-8,
+        maxiter=50,
+        full_output=True
+    )
+    
+    # Punto de la raíz (MUY visible)
+    plt.scatter(r_bis, 0,
+                s=100,                 # tamaño grande
+                marker='o',
+                edgecolors='black',
+                color=linea.get_color(),
+                zorder=5)
+    
+    # Etiqueta
+    plt.annotate(f"{r_bis:.4f}",
+                 (r_bis, 0),
+                 textcoords="offset points",
+                 xytext=(-15,10),
+                 fontsize=9)
+
+plt.axhline(0, color="black")
+plt.axvline(0, color="black")
+plt.xlabel("x")
+plt.ylabel("g(x)")
+plt.title("g(x) = e^{-x} - cos(ax) con raíces marcadas")
+plt.legend()
+plt.grid()
+plt.show()
+```
 
 ::: {#exr-tarea1_5}
 $g(x)= e^x-log(x+1) -b$ donde $b=2, 3, 5$.
-::/
-g(x)= e^x - log(x+1) - b, b=2,3,5
-grafica de la función
+:::
+
+grafica de la función  
 
 ```{python}
 def g(x, b):
-  return np.exp(x) - np.log(x+1) - b
+    return np.exp(x) - np.log(x+1) - b
+
 x = np.linspace(0, 2, 400)
+
 plt.figure()
 for b in [2, 3, 5]:
-  plt.plot(x, g(x, b), label = f"b={b}")
-plt.axhline(0, color = "black") #Eje x
-plt.axvline(0, color = "black") #Eje y
+    plt.plot(x, g(x, b), label=f"b={b}")
+
+plt.axhline(0)
 plt.xlabel("x")
 plt.ylabel("g(x)")
-plt.title("Gráfica de g(x) = e^x - log(x+1) - b")
+plt.title("g(x)=e^x - log(x+1) - b")
 plt.legend()
 plt.grid()
 plt.show()
 ```
 
 aproximacion de las raíces
-bisección
 
 ```{python}
-for b in [2, 3, 5]:
-  r_bis = optimize.bisect(lambda x: g(x, b), 0, 2)
-  print(f"b={b}, raíz por bisección: {r_bis}")
+# Función
+def g(x, b):
+    return np.exp(x) - np.log(x + 1) - b
+
+# Derivada (para Newton-Raphson)
+def dg(x, b):
+    return np.exp(x) - 1/(x + 1)
+
+# Valores de b
+valores_b = [2, 3, 5]
+
+# Intervalo y valores iniciales (según la gráfica)
+a_bis, b_bis = 0.0, 2.0
+x0, x1 = 0.2, 1.5
+
+for b in valores_b:
+    print(f"\n==============================")
+    print(f"RESULTADOS PARA b = {b}")
+    print(f"==============================")
+
+    # ---------------- BISECCIÓN ----------------
+    r_bis, info_bis = optimize.bisect(
+        g,
+        a_bis,
+        b_bis,
+        args=(b,),
+        xtol=1e-8,
+        maxiter=50,
+        full_output=True
+    )
+
+    print("\nMétodo de Bisección")
+    print(f"  Raíz: {r_bis:.8f}")
+    print(f"  Converge: {info_bis.converged}")
+    print(f"  Iteraciones: {info_bis.iterations}")
+
+    # ---------------- SECANTE ----------------
+    r_sec, info_sec = optimize.newton(
+        g,
+        x0=x0,
+        x1=x1,
+        args=(b,),
+        tol=1e-8,
+        maxiter=50,
+        full_output=True
+    )
+
+    print("\nMétodo de la Secante")
+    print(f"  Raíz: {r_sec:.8f}")
+    print(f"  Converge: {info_sec.converged}")
+    print(f"  Iteraciones: {info_sec.iterations}")
+
+    # ---------------- NEWTON-RAPHSON ----------------
+    r_new, info_new = optimize.newton(
+        g,
+        x0=0.8,
+        fprime=dg,
+        args=(b,),
+        tol=1e-8,
+        maxiter=50,
+        full_output=True
+    )
+
+    print("\nMétodo de Newton-Raphson")
+    print(f"  Raíz: {r_new:.8f}")
+    print(f"  Converge: {info_new.converged}")
+    print(f"  Iteraciones: {info_new.iterations}")
 ```
 
-newton-Raphson
-
 ```{python}
-for b in [2, 3, 5]:
-  r_new = optimize.newton(lambda x: g(x, b), 1.0)
-  print(f"b={b}, raíz por Newton-Raphson: {r_new}")
-```
+# Función
+def g(x, b):
+    return np.exp(x) - np.log(x + 1) - b
 
-secante
+valores_b = [2, 3, 5]
+x = np.linspace(0, 2, 400)
 
-```{python}
-for b in [2, 3, 5]:
-  r_sec = optimize.newton(lambda x: g(x, b), x0=0.5, x1=1.5)
-  print(f"b={b}, raíz por secante: {r_sec}")
+plt.figure()
+
+for b in valores_b:
+    
+    # Graficar función
+    y = g(x, b)
+    linea, = plt.plot(x, y, label=f"b={b}")
+    
+    # Raíz por bisección
+    r_bis, _ = optimize.bisect(
+        g,
+        0.0,
+        2.0,
+        args=(b,),
+        xtol=1e-8,
+        maxiter=50,
+        full_output=True
+    )
+    
+    # Punto de la raíz (visible)
+    plt.scatter(r_bis, 0,
+                s=100,
+                marker='o',
+                edgecolors='black',
+                color=linea.get_color(),
+                zorder=5)
+    
+    # Etiqueta
+    plt.annotate(f"{r_bis:.4f}",
+                 (r_bis, 0),
+                 textcoords="offset points",
+                 xytext=(-15,10))
+
+plt.axhline(0, color="black")
+plt.axvline(0, color="black")
+plt.xlabel("x")
+plt.ylabel("g(x)")
+plt.title("g(x)=e^x - log(x+1) - b con raíces")
+plt.legend()
+plt.grid()
+plt.show()
 ```
 
 ::: {#exr-tarea1_6}
@@ -300,18 +768,101 @@ def find_roots(c, x_min=0, x_max=20, n=2000):
   return roots
 ```
 
-raices para c=1
+aproximación de las raíces para c=1 y c=pi
 
 ```{python}
-roots_c1 = find_roots(1)
-print(f"Raíces para c=1: {roots_c1}")
+# Función
+def f(x, c):
+    return np.sqrt(x) - np.sin(x) - c
+
+# Buscar cambios de signo para localizar raíces
+def encontrar_intervalos(c, x_min=0, x_max=20, n=4000):
+    xs = np.linspace(x_min, x_max, n)
+    intervalos = []
+
+    for i in range(len(xs)-1):
+        if f(xs[i], c) * f(xs[i+1], c) < 0:
+            intervalos.append((xs[i], xs[i+1]))
+
+    return intervalos
+
+
+# Aplicar secante en cada intervalo
+for c in [1, np.pi]:
+    print("\n==============================")
+    print(f"Resultados para c = {c} por metodo de la secante")
+    print("==============================")
+
+    intervalos = encontrar_intervalos(c)
+
+    for i, (x0, x1) in enumerate(intervalos):
+        raiz, info = optimize.newton(
+            f,
+            x0=x0,
+            x1=x1,          # activa método secante
+            args=(c,),
+            tol=1e-8,
+            maxiter=100,
+            full_output=True
+        )
+
+        print(f"Raíz {i+1}: {raiz:.8f}   Iteraciones: {info.iterations}")
 ```
 
-raices para c=pi
-
 ```{python}
-roots_cpi = find_roots(np.pi)
-print(f"Raíces para c=pi: {roots_cpi}")
+# Función
+def f(x, c):
+    return np.sqrt(x) - np.sin(x) - c
+
+# Detectar intervalos con cambio de signo
+def encontrar_intervalos(c, x_min=0, x_max=20, n=4000):
+    xs = np.linspace(x_min, x_max, n)
+    intervalos = []
+
+    for i in range(len(xs)-1):
+        if f(xs[i], c) * f(xs[i+1], c) < 0:
+            intervalos.append((xs[i], xs[i+1]))
+
+    return intervalos
+
+x = np.linspace(0, 20, 1000)
+valores_c = [1, np.pi]
+
+plt.figure()
+
+for c in valores_c:
+    
+    # Graficar función
+    y = f(x, c)
+    linea, = plt.plot(x, y, label=f"c={c}")
+    
+    # Encontrar intervalos
+    intervalos = encontrar_intervalos(c)
+    
+    # Calcular y marcar raíces
+    for (a, b) in intervalos:
+        r = optimize.bisect(lambda x: f(x, c), a, b)
+        
+        plt.scatter(r, 0,
+                    s=80,
+                    edgecolors='black',
+                    color=linea.get_color(),
+                    zorder=5)
+        
+        plt.annotate(f"{r:.3f}",
+                     (r, 0),
+                     textcoords="offset points",
+                     xytext=(-10,10),
+                     fontsize=8)
+
+plt.axhline(0, color="black")
+plt.axvline(0, color="black")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.title("f(x)=sqrt(x) - sin(x) - c con raíces")
+plt.legend()
+plt.grid()
+plt.show()
 ```
 
 ::: {#exr-tarea1_7}
@@ -326,40 +877,102 @@ tiene dos soluciones. Realiza una gráfica de las curvas de nivel y aproxima las
 :::
 {y^2 - x^2 + 4x - 2 = 0, x^2 +3y^2 - 4 = 0}
 ```{python}
-# definir dominio
-x = np.linspace(-3, 3, 400)
-y = np.linspace(-3, 3, 400)
-X, Y = np.meshgrid(x, y)
-# ecuaciones
-F1 = Y**2 - X**2 + 4*X - 2
-F2 = X**2 + 3*Y**2 - 4
+#| code-fold: true
+#| fig-align: "center"
+#| warning: false
 
-plt.figure()
-plt.contour(X, Y, F1, levels=[0], colors='red', label='Ecuación 1')
-plt.contour(X, Y, F2, levels=[0], colors='blue', label='Ecuación 2')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('Curvas de nivel de las ecuaciones')
+f1 = lambda x: np.sqrt(x**2 - 4 *x +2)
+f2 = lambda x: -np.sqrt(x**2 - 4 *x +2)
+
+g1 = lambda x: np.sqrt((1/3)* (-x** 2 +4))
+g2 = lambda x: -np.sqrt((1/3)* (-x** 2 +4))
+
+x = np.linspace(-2, 2,500)
+
+# Crear gráfica
+plt.figure(figsize=(8,6)) # Tamaño en pulgadas
+plt.plot(x,f1(x), color ="#115dc1", label = "f1(x)")
+plt.plot(x,f2(x), color ="#235d1c", label = "f2(x)")
+plt.plot(x, g1(x), color = "#c8955a", label = "g1(x)")
+plt.plot(x, g2(x), color = "#e54c19", label = "g2(x)")
+plt.axhline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje x
+plt.axvline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje y
+plt.legend(fontsize= 14)
+
+# Personalizar gráfica
+plt.title("Gráfica Ejercicio 7", fontsize= 12)
+plt.xlabel("x")
+plt.ylabel("y")
 plt.grid()
-plt.legend(['Ecuación 1', 'Ecuación 2'])
+
 plt.show()
 ```
 
 En la grafica se observa que las curvas se intersectan en dos puntos, lo que indica que el sistema tiene dos soluciones.
 
-# aproximación de las soluciones
+# Encontramos los valores de $x$ igualando para $y^2$ y obtenemos dos ecuaciones para cada solución:
 
 ```{python}
-def system(vars):
-  x, y = vars
-  return [y**2 - x**2 + 4*x - 2, x**2 + 3*y**2 - 4]
+#| code-fold: true
+#| warning: false
+
+f = lambda x : (4/3)* x**2 - 4 *x +2/3
+
+# Crear gráfica
+plt.figure(figsize=(8,6)) # Tamaño en pulgadas
+plt.plot(x,f(x), color ="#115dc1", label = "f(x)")
+plt.axhline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje x
+plt.axvline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje y
+plt.legend(fontsize= 14)
+
+# Personalizar gráfica
+plt.title("Gráfica Ejercicio 7.b", fontsize= 12)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.grid()
+
+plt.show()
+
 ```
 
 ```{python}
-solucion1 = optimize.fsolve(system, (1, 1))
-solucion2 = optimize.fsolve(system, (-1, -1))
-print(f"Solución 1: {solucion1}")
-print(f"Solución 2: {solucion2}")
+#| code-fold: true
+#| warning: false
+
+df = lambda x: (8/3)*x-4
+
+x_root = optimize.newton(f, x0=1, fprime=df)
+y1_root = f1(x_root)
+y2_root = f2(x_root)
+
+print(f"Los puntos de intersección son ({x_root},{y1_root})y ({x_root}, {y2_root})")
+print(f"Los puntos de intersección son ({x_root},{y1_root})y ({x_root}, {y2_root})")
+```
+
+```{python}
+#| code-fold: true
+#| fig-align: "center"
+#| warning: false
+
+# Crear gráfica
+plt.figure(figsize=(8,6)) # Tamaño en pulgadas
+plt.plot(x,f1(x), color ="#115dc1", label = "f1(x)")
+plt.plot(x,f2(x), color ="#235d1c", label = "f2(x)")
+plt.plot(x, g1(x), color = "#c8955a", label = "g1(x)")
+plt.plot(x, g2(x), color = "#e54c19", label = "g2(x)")
+plt.plot(x_root, y1_root, marker = 'o', ms = 8, color = "firebrick")
+plt.plot(x_root, y2_root, marker = 'o', ms = 8, color = "firebrick")
+plt.axhline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje x
+plt.axvline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje y
+plt.legend(fontsize= 14)
+
+# Personalizar gráfica
+plt.title("Gráfica Ejercicio 7", fontsize= 12)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.grid()
+
+plt.show()
 ```
 
 ::: {#exr-tarea1_8}
@@ -376,35 +989,61 @@ Realiza una gráfica de las curvas de nivel y aproxima la solución con la funci
 Grafica de las curvas de nivel
 
 ```{python}
-# dominio
-x = np.linspace(-2, 2, 400)
-y = np.linspace(-2, 2, 400)
-X, Y = np.meshgrid(x, y)
-# curvas de nivel
-F1 = np.sin(X) + Y**2 - 1
-F2 = X + np.cos(Y) - 1
-plt.figure()
-plt.contour(X, Y, F1, levels=[0], colors='red', label='Ecuación 1')
-plt.contour(X, Y, F2, levels=[0], colors='blue', label='Ecuación 2')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('Curvas de nivel de las ecuaciones')
+#| code-fold: true
+#| fig-align: "center"
+
+f1 = lambda x: np.sqrt(1- np.sin(x))
+f2 = lambda x: -f1(x)
+g = lambda x: np.acos(1-x)
+
+x = np.linspace(0,2, 500)
+
+# Crear gráfica
+plt.figure(figsize=(8,6)) # Tamaño en pulgadas
+plt.plot(x,f1(x), color ="#115dc1", label = "f1(x)")
+plt.plot(x,f2(x), color ="#235d1c", label = "f2(x)")
+plt.plot(x, g(x), color = "#c8955a", label = "g(x)")
+plt.axhline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje x
+plt.axvline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje y
+plt.legend(fontsize= 14)
+
+# Personalizar gráfica
+plt.title("Gráfica Ejercicio 8", fontsize= 12)
+plt.xlabel("x")
+plt.ylabel("y")
 plt.grid()
-plt.legend(['Ecuación 1', 'Ecuación 2'])
+
 plt.show()
 ```
 
+aproximamos la unica intersección con fsolve
 ```{python}
-def system(vars):
-  x, y = vars
-  return [np.sin(x) + y**2 - 1, x + np.cos(y) - 1]
-```
+#| code-fold: true
 
-```{python}
-solucion1 = optimize.fsolve(system, (0.5, 0.5))
-solucion2 = optimize.fsolve(system, (-0.5, -0.5))
-print(f"Solución 1: {solucion1}")
-print(f"Solución 2: {solucion2}")
+def sistema(variables):
+  x,y = variables
+  return [np.sin(x) + y**2-1, x+ np.cos(y)-1]
+
+solucion = optimize.fsolve(sistema, x0=[0.25,1])  
+print(f"El punto de intersección es:{solucion}")
+
+# Crear gráfica
+plt.figure(figsize=(8,6)) # Tamaño en pulgadas
+plt.plot(x,f1(x), color ="#115dc1", label = "f1(x)")
+plt.plot(x,f2(x), color ="#235d1c", label = "f2(x)")
+plt.plot(x, g(x), color = "#c8955a", label = "g(x)")
+plt.plot(solucion[0], solucion[1], marker = "o", ms = 8, color = "firebrick")
+plt.axhline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje x
+plt.axvline(0, color = "black", linewidth = 0.8, linestyle = "--") #Eje y
+plt.legend(fontsize= 14)
+
+# Personalizar gráfica
+plt.title("Gráfica Ejercicio 8", fontsize= 12)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.grid()
+
+plt.show()
 ```
 
 ::: {#exr-tarea1_9}
@@ -448,6 +1087,50 @@ def system(vars):
 ```{python}
 solucion1 = optimize.fsolve(system, (1, 1))
 print(f"Solución: {solucion1}")
+```
+
+```{python}
+# Dominio
+x = np.linspace(-3, 3, 400)
+y = np.linspace(-3, 3, 400)
+X, Y = np.meshgrid(x, y)
+
+# Curvas de nivel
+F1 = X**3 + Y - 6
+F2 = Y**3 - X - 4
+
+# Sistema
+def system(vars):
+    x, y = vars
+    return [x**3 + y - 6, y**3 - x - 4]
+
+# Resolver sistema
+solucion = optimize.fsolve(system, (1, 1))
+x_sol, y_sol = solucion
+
+# Gráfica
+plt.figure()
+
+plt.contour(X, Y, F1, levels=[0], colors='red')
+plt.contour(X, Y, F2, levels=[0], colors='blue')
+
+# Punto de intersección
+plt.scatter(x_sol, y_sol,
+            color='red',
+            s=120,
+            edgecolors='black',
+            zorder=5)
+
+plt.annotate(f"({x_sol:.3f}, {y_sol:.3f})",
+             (x_sol, y_sol),
+             textcoords="offset points",
+             xytext=(10,10))
+
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Intersección del sistema no lineal')
+plt.grid()
+plt.show()
 ```
 
 
@@ -514,4 +1197,56 @@ def system(vars):
 ```{python}
 equilibrio = optimize.fsolve(system, (50, 2))
 print(f"Punto de equilibrio (q, p): {equilibrio}")
+```
+
+
+```{python}
+# Precio
+p = np.linspace(0, 5, 400)
+
+# Curvas
+q_d = 200 - 10 * p**2
+q_s = 5 * p**3 + 15
+
+# Sistema para equilibrio
+def system(vars):
+    q, p = vars
+    return [q + 10*p**2 - 200,
+            q - 5*p**3 - 15]
+
+# Resolver equilibrio
+equilibrio = optimize.fsolve(system, (50, 2))
+q_eq, p_eq = equilibrio
+
+# Gráfica
+plt.figure(figsize=(8,6))
+
+plt.plot(p, q_d, color='red', label='Demanda')
+plt.plot(p, q_s, color='blue', label='Oferta')
+
+# Punto de equilibrio
+plt.scatter(p_eq, q_eq,
+            color='black',
+            s=120,
+            zorder=5)
+
+# Líneas guía
+plt.axvline(p_eq, linestyle='--')
+plt.axhline(q_eq, linestyle='--')
+
+# Etiqueta del punto
+plt.annotate(f"E({p_eq:.2f}, {q_eq:.2f})",
+             (p_eq, q_eq),
+             textcoords="offset points",
+             xytext=(10,10))
+
+plt.xlabel('Precio (p)')
+plt.ylabel('Cantidad (q)')
+plt.title('Equilibrio de mercado\nDemanda vs Oferta no lineales')
+plt.legend()
+plt.grid()
+plt.show()
+
+print(f"Precio de equilibrio: {p_eq:.4f}")
+print(f"Cantidad de equilibrio: {q_eq:.4f}")
 ```
