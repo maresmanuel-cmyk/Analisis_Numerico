@@ -1,6 +1,6 @@
 ---
 title: "Tarea 4. Interpolación polinomial y con splines"
-author: "Mi nombre"
+author: "MANUEL GUADALUPE MARES HERRERA"
 lang: es
 format: 
   html:
